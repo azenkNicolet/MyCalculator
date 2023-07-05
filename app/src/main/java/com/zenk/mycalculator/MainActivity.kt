@@ -30,6 +30,8 @@ class MainActivity : AppCompatActivity() {
     fun onClear(view: View)
     {
         tvInput?.text = ""
+        lastNumeric = false
+        lastDecimal = false
     }
 
     fun onDecimalPoint(view: View)
@@ -81,7 +83,46 @@ class MainActivity : AppCompatActivity() {
                     {
                         one = prefix + one
                     }
-                    tvInput?.text = (one.toDouble() - two.toDouble()).toString()
+                    tvInput?.text = removeZeroAfterDecimal((one.toDouble() - two.toDouble()).toString())
+                }
+
+                else if(tvValue.contains("+"))
+                {
+                    val splitValue = tvValue.split("+")
+                    var one = splitValue[0]
+                    var two = splitValue[1]
+
+                    if(prefix.isNotEmpty())
+                    {
+                        one = prefix + one
+                    }
+                    tvInput?.text = removeZeroAfterDecimal((one.toDouble() + two.toDouble()).toString())
+                }
+
+                else if(tvValue.contains("*"))
+                {
+                    val splitValue = tvValue.split("*")
+                    var one = splitValue[0]
+                    var two = splitValue[1]
+
+                    if(prefix.isNotEmpty())
+                    {
+                        one = prefix + one
+                    }
+                    tvInput?.text = removeZeroAfterDecimal((one.toDouble() * two.toDouble()).toString())
+                }
+
+                else if(tvValue.contains("/"))
+                {
+                    val splitValue = tvValue.split("/")
+                    var one = splitValue[0]
+                    var two = splitValue[1]
+
+                    if(prefix.isNotEmpty())
+                    {
+                        one = prefix + one
+                    }
+                    tvInput?.text = removeZeroAfterDecimal((one.toDouble() / two.toDouble()).toString())
                 }
 
 
@@ -98,8 +139,19 @@ class MainActivity : AppCompatActivity() {
         }
         else
         {
-            value.contains("/") || value.contains("*") || value.contains("+") || value.contains("-")
+            value.contains("/") || value.contains("*") || value.contains("-") || value.contains("+")
 
         }
+    }
+
+    private fun removeZeroAfterDecimal(result: String) : String
+    {
+        var value = result
+        if(result.contains(".0"))
+        {
+            value = result.substring(0, result.length - 2)
+        }
+
+        return value
     }
 }
