@@ -79,6 +79,8 @@ class MainActivity : AppCompatActivity() {
                     var one = splitValue[0]
                     var two = splitValue[1]
 
+
+
                     if(prefix.isNotEmpty())
                     {
                         one = prefix + one
